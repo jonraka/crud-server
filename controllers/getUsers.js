@@ -1,12 +1,24 @@
 const {
     userModel
 } = require('../models/userModel');
+const {
+    sendSuccess,
+    sendUserError,
+    sendServerError
+} = require('../utils/sender');
 
 module.exports = getUsers = async (req, res) => {
-    userModel.find().then(data => {
-        res.send(data)
+    userModel.aggregate([{
+        $project: {
+            _id: 1,
+            name: 1,
+            age: 1,
+            email: 1,
+        }
+    }]).then(data => {
+        sendSuccess(res, data);
     }).catch(err => {
         console.log(err);
-        res.send('Internal error');
+        sendServerError(res, 'Internal Error #c-gu1')
     })
 }

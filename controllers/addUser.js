@@ -10,7 +10,7 @@ const {
 module.exports = addUser = (req, res) => {
     const user = new userModel(req.body);
 
-    user.validate(async err => {
+    user.validate(err => {
         if (err) {
             res.sendUserError(res, Object.entries(err.errors).map(([key, error]) => [key, error.kind]))
             return;
@@ -20,13 +20,13 @@ module.exports = addUser = (req, res) => {
             if (data._id) {
                 sendSuccess(res, 'User created');
             } else {
-                sendServerError(res, 'Internal Error #0001')
+                sendServerError(res, 'Internal Error #c-au1')
             }
         }).catch(err => {
             if (err.code === 11000) {
                 sendUserError(res, 'Email already exits');
             } else {
-                sendServerError(res, 'Internal Error #0002');
+                sendServerError(res, 'Internal Error #c-au2');
             }
         });
 
