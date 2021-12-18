@@ -20,7 +20,7 @@ const sendNotAuthorized = (res, data) => res.status(401).send({
 
 const sendNotFound = (res) => res.status(401).send({
     success: false,
-    error: "Path not found"
+    error: "Puslapis nerastas"
 });
 
 

@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
         maxlength: 200,
         unique: true,
         trim: true,
-        validate: [validateEmail, 'Please fill a valid email address'],
+        validate: [validateEmail, 'Įveskite tinkama el. paštą'],
     },
     password: {
         type: String,

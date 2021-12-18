@@ -18,15 +18,15 @@ module.exports = addUser = (req, res) => {
 
         user.save().then(data => {
             if (data._id) {
-                sendSuccess(res, 'User created');
+                sendSuccess(res, 'Vartotojas sukūrtas');
             } else {
-                sendServerError(res, 'Internal Error #c-au1')
+                sendServerError(res, 'Vidinė klaida #c-au1')
             }
         }).catch(err => {
             if (err.code === 11000) {
-                sendUserError(res, 'Email already exits');
+                sendUserError(res, 'El. paštas jau egzistuoja');
             } else {
-                sendServerError(res, 'Internal Error #c-au2');
+                sendServerError(res, 'Vidinė klaida #c-au2');
             }
         });
 
