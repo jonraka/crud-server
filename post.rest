@@ -1,1 +1,15 @@
 GET http://localhost:3000/
+
+
+#####
+POST http://localhost:3011/api/users
+Content-Type: application/json
+
+{
+    "kebob": "potata as",
+    "name": "Bobx as",
+    "age2": 3,
+    "age": 1,
+    "password": "testgasgasdgz",
+    "email": "gaszgsdaxzzzzx@fgasd.com"
+}

@@ -1,16 +1,34 @@
-const { userModel } = require('../models/userModel');
+const {
+    userModel
+} = require('../models/userModel');
+const {
+    sendSuccess,
+    sendUserError,
+    sendServerError
+} = require('../utils/sender');
 
-/**
-* @param {Express.Request} req 
-* @param {Express.Response} res 
-*/
-module.exports = addUser = async (req, res) => {
+module.exports = addUser = (req, res) => {
+    const user = new userModel(req.body);
 
-    const { username } =  req?.query;
+    user.validate(async err => {
+        if (err) {
+            res.sendUserError(res, Object.entries(err.errors).map(([key, error]) => [key, error.kind]))
+            return;
+        }
 
-    res.send(await userModel.create({
-        username: username || 'bob'
-    }).catch(err => ({
-        error: err.message
-    })));
+        user.save().then(data => {
+            if (data._id) {
+                sendSuccess(res, 'User created');
+            } else {
+                sendServerError(res, 'Internal Error #0001')
+            }
+        }).catch(err => {
+            if (err.code === 11000) {
+                sendUserError(res, 'Email already exits');
+            } else {
+                sendServerError(res, 'Internal Error #0002');
+            }
+        });
+
+    })
 }

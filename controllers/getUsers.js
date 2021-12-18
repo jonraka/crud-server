@@ -1,5 +1,12 @@
-const { userModel } = require('../models/userModel');
+const {
+    userModel
+} = require('../models/userModel');
 
 module.exports = getUsers = async (req, res) => {
-    res.send(await userModel.find());
+    userModel.find().then(data => {
+        res.send(data)
+    }).catch(err => {
+        console.log(err);
+        res.send('Internal error');
+    })
 }

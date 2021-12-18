@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const db = mongoose.connection;//.useDb("codeacad-final");
+const db = mongoose.connection; //.useDb("codeacad-final");
 
 db.on('connecting', () => {
 	console.log('connecting to MongoDB...');
@@ -18,7 +18,7 @@ db.once('open', () => {
 	console.log('MongoDB connection opened!');
 });
 
-db.on('reconnected',  () => {
+db.on('reconnected', () => {
 	console.log('MongoDB reconnected!');
 });
 
@@ -32,6 +32,6 @@ db.on('disconnected', () => {
 mongoose.connect(process.env.MONGODB_URI);
 
 module.exports = {
-    mongoose,
-    db
+	mongoose,
+	db
 }
