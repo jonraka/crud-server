@@ -7,16 +7,12 @@ const {
 const { joiUserUpdateSchema } = require('../utils/validators');
 const bcrypt = require('bcryptjs');
 
-// Client.update({_id: id}, client, { runValidators: true }, function(err) {
-//     ....
-//   });
-
 module.exports = updateUser = (req, res) => {
   joiUserUpdateSchema
     .validateAsync(req.body)
     .then(({ userId, ...dataToUpdate }) => {
       if (!Object.keys(dataToUpdate).length) {
-        sendUserError(res, 'Duomenys nepasikeite');
+        sendUserError(res, 'Duomenys nepasikeitė');
         return;
       }
 
@@ -53,7 +49,7 @@ module.exports = updateUser = (req, res) => {
           res,
           err.details.map((item) => [
             item.context.key,
-            'Netinkamas laukas',
+            'Blogi duomenys',
             item.message,
           ])
         );

@@ -25,7 +25,7 @@ const joiUserUpdateSchema = Joi.object({
   userId: Joi.string().custom((val, newErr) =>
     mongoose.Types.ObjectId.isValid(val)
       ? mongoose.Types.ObjectId(val)
-      : newErr.message('Netinkamas varotojo identifikatorius')
+      : newErr.message('Netinkamas identifikatorius')
   ),
 });
 

@@ -39,7 +39,7 @@ module.exports = addUser = (req, res) => {
           res,
           err.details?.map((item) => [
             item?.context?.key,
-            'Netinkamas laukas',
+            'Netinkami duomenys',
             item?.message,
           ])
         );
