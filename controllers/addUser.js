@@ -19,7 +19,7 @@ module.exports = addUser = (req, res) => {
         .create(bodyData)
         .then((data) => {
           if (data._id) {
-            sendSuccess(res, 'Vartotojas sukūrtas');
+            sendSuccess(res, 'Vartotojas sukurtas');
           } else {
             sendServerError(res, 'Vidinė klaida #c-au1');
           }
@@ -45,7 +45,7 @@ module.exports = addUser = (req, res) => {
         );
       } else {
         console.log(err);
-        sendServerError(res, 'Vidinė klaida');
+        sendServerError(res, 'Vidinė klaida #c-au3');
       }
     });
 };

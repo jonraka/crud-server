@@ -22,7 +22,10 @@ module.exports = updateUser = (req, res) => {
         })
         .then(async (user) => {
           if (dataToUpdate.password) {
-            dataToUpdate.password = await bcrypt.hash(dataToUpdate.password, 10);
+            dataToUpdate.password = await bcrypt.hash(
+              dataToUpdate.password,
+              10
+            );
           }
           Object.assign(user, dataToUpdate);
           return user.save();
@@ -31,15 +34,15 @@ module.exports = updateUser = (req, res) => {
           if (data.name) {
             sendSuccess(res, 'Duomenys atnaujinti');
           } else {
-            sendServerError(res, 'Vidinė klaida #c-au1');
+            sendServerError(res, 'Vidinė klaida #c-uu1');
           }
         })
         .catch((err) => {
-          console.log(err)
           if (err.code === 11000) {
             sendUserError(res, 'El. paštas jau egzistuoja');
           } else {
-            sendServerError(res, 'Vidinė klaida #c-au2');
+            console.log(err);
+            sendServerError(res, 'Vidinė klaida #c-uu2');
           }
         });
     })
@@ -55,7 +58,7 @@ module.exports = updateUser = (req, res) => {
         );
       } else {
         console.log(err);
-        sendServerError(res, 'Vidinė klaida');
+        sendServerError(res, 'Vidinė klaida #c-uu3');
       }
     });
 };

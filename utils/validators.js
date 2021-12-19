@@ -6,7 +6,7 @@ const joiUserAddSchema = Joi.object({
     .trim()
     .min(2)
     .max(100)
-    .regex(/^[a-z]+$/i)
+    .regex(/^[a-ząčęėįšųūž]+$/i)
     .required(),
   age: Joi.number().min(1).max(120).required(),
   email: Joi.string().trim().min(3).max(200).email().required(),
@@ -18,7 +18,7 @@ const joiUserUpdateSchema = Joi.object({
     .trim()
     .min(2)
     .max(100)
-    .regex(/^[a-z]+$/i),
+    .regex(/^[a-ząčęėįšųūž]+$/i),
   age: Joi.number().min(1).max(120),
   email: Joi.string().trim().min(3).max(200).email(),
   password: Joi.string().min(5).max(100),
