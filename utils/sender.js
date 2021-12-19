@@ -1,33 +1,37 @@
-const sendSuccess = (res, data) => res.status(200).send({
+const sendSuccess = (res, data) =>
+  res.status(200).send({
     success: true,
-    data
-});
+    data,
+  });
 
-const sendServerError = (res, data) => res.status(500).send({
+const sendServerError = (res, data) =>
+  res.status(500).send({
     success: false,
-    error: data
-});
+    error: data,
+  });
 
-const sendUserError = (res, data) => res.status(400).send({
+const sendUserError = (res, data) =>
+  res.status(400).send({
     success: false,
-    error: data
-});
+    error: data,
+  });
 
-const sendNotAuthorized = (res, data) => res.status(401).send({
+const sendNotAuthorized = (res, data) =>
+  res.status(401).send({
     success: false,
-    error: data
-});
+    error: data,
+  });
 
-const sendNotFound = (res) => res.status(401).send({
+const sendNotFound = (res) =>
+  res.status(401).send({
     success: false,
-    error: "Puslapis nerastas"
-});
-
+    error: 'Puslapis nerastas',
+  });
 
 module.exports = {
-    sendSuccess,
-    sendServerError,
-    sendUserError,
-    sendNotAuthorized,
-    sendNotFound
-}
+  sendSuccess,
+  sendServerError,
+  sendUserError,
+  sendNotAuthorized,
+  sendNotFound,
+};

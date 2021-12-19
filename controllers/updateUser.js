@@ -1,15 +1,19 @@
+const mongoose = require('mongoose');
 const { userModel } = require('../models/userModel');
-
 const {
   sendSuccess,
   sendUserError,
   sendServerError,
 } = require('../utils/sender');
+const Joi = require('joi');
+const { joiUserUpdateSchema } = require('../utils/validators');
 
-const { joiUserAddSchema } = require('../utils/validators');
+// Client.update({_id: id}, client, { runValidators: true }, function(err) {
+//     ....
+//   });
 
-module.exports = addUser = (req, res) => {
-  joiUserAddSchema
+module.exports = updateUser = (req, res) => {
+  joiUserUpdateSchema
     .validateAsync(req.body)
     .then((bodyData) => {
       userModel
@@ -33,10 +37,10 @@ module.exports = addUser = (req, res) => {
       if (res.details) {
         sendUserError(
           res,
-          err.details?.map((item) => [
-            item?.context?.key,
+          err.details.map((item) => [
+            item.context.key,
             'Netinkamas laukas',
-            item?.message,
+            item.message,
           ])
         );
       } else {

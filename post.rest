@@ -6,10 +6,10 @@ POST http://localhost:3011/api/users
 Content-Type: application/json
 
 {
-    "kebob": "potata as",
-    "name": "Bobx as",
-    "age2": 3,
+    "name": "Bobx",
     "age": 1,
-    "password": "testgasgasdgz",
-    "email": "gaszgsdaxzzzzx@fgasd.com"
+    "password": "tesxasdgasd",
+    "email": "gaszgsdaxzzzzxx@fgasd.com"
 }
+#####
+GET http://localhost:3011/api/user/61bf2c6529df86101a326739
