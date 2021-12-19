@@ -23,9 +23,15 @@ const sendNotAuthorized = (res, data) =>
   });
 
 const sendNotFound = (res) =>
-  res.status(401).send({
+  res.status(404).send({
     success: false,
     error: 'Puslapis nerastas',
+  });
+
+const sendJsonError = (res) =>
+  res.status(400).send({
+    success: false,
+    error: 'Invalid JSON',
   });
 
 module.exports = {
@@ -34,4 +40,5 @@ module.exports = {
   sendUserError,
   sendNotAuthorized,
   sendNotFound,
+  sendJsonError,
 };

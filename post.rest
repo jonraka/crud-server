@@ -8,8 +8,10 @@ Content-Type: application/json
 {
     "name": "Bobx",
     "age": 1,
-    "password": "tesxasdgasd",
-    "email": "gaszgsdaxzzzzxx@fgasd.com"
+    "password": "tesxasdgasdz",
+    "email": "gaszgsdaxzzzzxzz@fgasd.com"
 }
 #####
-GET http://localhost:3011/api/user/61bf2c6529df86101a326739
+GET http://localhost:3011/api/users/61bf7f75a21d993952ad8042
+#####
+DELETE http://localhost:3011/api/user/61bf7f3da21d993952ad8021

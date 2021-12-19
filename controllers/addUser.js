@@ -1,4 +1,5 @@
 const { userModel } = require('../models/userModel');
+const bcrypt = require('bcryptjs');
 
 const {
   sendSuccess,
@@ -11,7 +12,9 @@ const { joiUserAddSchema } = require('../utils/validators');
 module.exports = addUser = (req, res) => {
   joiUserAddSchema
     .validateAsync(req.body)
-    .then((bodyData) => {
+    .then(async (bodyData) => {
+      bodyData.password = await bcrypt.hash(bodyData.password, 10);
+
       userModel
         .create(bodyData)
         .then((data) => {
@@ -25,12 +28,13 @@ module.exports = addUser = (req, res) => {
           if (err.code === 11000) {
             sendUserError(res, 'El. paštas jau egzistuoja');
           } else {
+            console.log(err);
             sendServerError(res, 'Vidinė klaida #c-au2');
           }
         });
     })
     .catch((err) => {
-      if (res.details) {
+      if (err.details) {
         sendUserError(
           res,
           err.details?.map((item) => [
@@ -40,7 +44,8 @@ module.exports = addUser = (req, res) => {
           ])
         );
       } else {
-        sendServerError(res, 'Internal Error');
+        console.log(err);
+        sendServerError(res, 'Vidinė klaida');
       }
     });
 };

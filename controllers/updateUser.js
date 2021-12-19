@@ -1,12 +1,11 @@
-const mongoose = require('mongoose');
 const { userModel } = require('../models/userModel');
 const {
   sendSuccess,
   sendUserError,
   sendServerError,
 } = require('../utils/sender');
-const Joi = require('joi');
 const { joiUserUpdateSchema } = require('../utils/validators');
+const bcrypt = require('bcryptjs');
 
 // Client.update({_id: id}, client, { runValidators: true }, function(err) {
 //     ....
@@ -15,17 +14,32 @@ const { joiUserUpdateSchema } = require('../utils/validators');
 module.exports = updateUser = (req, res) => {
   joiUserUpdateSchema
     .validateAsync(req.body)
-    .then((bodyData) => {
+    .then(({ userId, ...dataToUpdate }) => {
+      if (!Object.keys(dataToUpdate).length) {
+        sendUserError(res, 'Duomenys nepasikeite');
+        return;
+      }
+
       userModel
-        .create(bodyData)
+        .findOne({
+          _id: userId,
+        })
+        .then(async (user) => {
+          if (dataToUpdate.password) {
+            dataToUpdate.password = await bcrypt.hash(dataToUpdate.password, 10);
+          }
+          Object.assign(user, dataToUpdate);
+          return user.save();
+        })
         .then((data) => {
-          if (data._id) {
-            sendSuccess(res, 'Vartotojas sukūrtas');
+          if (data.name) {
+            sendSuccess(res, 'Duomenys atnaujinti');
           } else {
             sendServerError(res, 'Vidinė klaida #c-au1');
           }
         })
         .catch((err) => {
+          console.log(err)
           if (err.code === 11000) {
             sendUserError(res, 'El. paštas jau egzistuoja');
           } else {
@@ -34,7 +48,7 @@ module.exports = updateUser = (req, res) => {
         });
     })
     .catch((err) => {
-      if (res.details) {
+      if (err.details) {
         sendUserError(
           res,
           err.details.map((item) => [
@@ -44,7 +58,8 @@ module.exports = updateUser = (req, res) => {
           ])
         );
       } else {
-        sendServerError(res, 'Internal Error');
+        console.log(err);
+        sendServerError(res, 'Vidinė klaida');
       }
     });
 };

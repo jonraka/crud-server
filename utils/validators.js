@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const monogoose = require('mongoose');
+const mongoose = require('mongoose');
 
 const joiUserAddSchema = Joi.object({
   name: Joi.string()
@@ -22,10 +22,10 @@ const joiUserUpdateSchema = Joi.object({
   age: Joi.number().min(1).max(120),
   email: Joi.string().trim().min(3).max(200).email(),
   password: Joi.string().min(5).max(100),
-  userId: Joi.string().custom((val, helper) =>
+  userId: Joi.string().custom((val, newErr) =>
     mongoose.Types.ObjectId.isValid(val)
-      ? true
-      : helper.message('Netinkamas varotojo identifikatorius')
+      ? mongoose.Types.ObjectId(val)
+      : newErr.message('Netinkamas varotojo identifikatorius')
   ),
 });
 
